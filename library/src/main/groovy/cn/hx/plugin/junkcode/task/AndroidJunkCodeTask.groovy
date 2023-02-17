@@ -24,6 +24,9 @@ class AndroidJunkCodeTask extends DefaultTask {
     static abc = "abcdefghijklmnopqrstuvwxyz".toCharArray()
     static color = "0123456789abcdef".toCharArray()
 
+
+    static otherAbc = "mnopqrstuvwxyzabcdefghijkl".toCharArray()
+
     @Nested
     JunkCodeConfig config
 
@@ -328,14 +331,8 @@ class AndroidJunkCodeTask extends DefaultTask {
         def sb = new StringBuilder()
         for (i in 0..5) {
             sb.append(abc[random.nextInt(abc.size())])
+            sb.append(otherAbc[random.nextInt(otherAbc.size())])
         }
-
-        def time = System.currentTimeMillis().toString()
-
-        def endPrefix = time.substring(time.length() -4,time.length() - 1)
-
-        sb.append(endPrefix)
-
         return sb.toString()
     }
 
