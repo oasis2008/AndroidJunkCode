@@ -154,7 +154,7 @@ class AndroidJunkCodeTask extends DefaultTask {
         printLog("generateActivity and class name is " + className)
 
         //生成Activity对应的布局文件的类名
-        def layoutName = "${config.resPrefix.toLowerCase()}${packageName.replace(".", "_")}_activity_${activityPreName}"
+        def layoutName = "${config.resPrefix.toLowerCase()}_activity_${activityPreName}"
 
         printLog("generateActivity and layoutName is " + layoutName)
         //生成对应的布局文件

@@ -17,7 +17,7 @@ class JunkCodeConfig {
     @Input
     int methodCountPerClass = 0
     @Input
-    String resPrefix = "junk_"
+    String resPrefix = "sns_app"
     @Input
     int drawableCount = 0
     @Input
