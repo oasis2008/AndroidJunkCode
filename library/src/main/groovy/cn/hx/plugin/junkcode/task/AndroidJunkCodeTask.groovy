@@ -277,9 +277,11 @@ class AndroidJunkCodeTask extends DefaultTask {
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs()
         }
-        FileWriter writer
+        Writer writer
         try {
-            writer = new FileWriter(file, StandardCharsets.UTF_8)
+
+            writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+
             writer.write(data)
         } catch (Exception e) {
             e.printStackTrace()
