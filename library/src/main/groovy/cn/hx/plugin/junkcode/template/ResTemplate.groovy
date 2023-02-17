@@ -44,7 +44,7 @@ class ResTemplate {
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_text_%s"
+        android:id="@+id/sns_hub_text_%s"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />

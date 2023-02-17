@@ -53,18 +53,24 @@ class AndroidJunkCodeTask extends DefaultTask {
      * 生成java代码和AndroidManifest.xml
      */
     void generateClasses() {
+        //生成包数量 config.packageCount
         for (int i = 0; i < config.packageCount; i++) {
             String packageName
+
             if (config.packageBase.isEmpty()) {
                 packageName = generateName(i)
             } else {
                 packageName = config.packageBase + "." + generateName(i)
             }
+
+            printLog(packageName)
+
             //生成Activity
             for (int j = 0; j < config.activityCountPerPackage; j++) {
                 def activityPreName = generateName(j)
                 generateActivity(packageName, activityPreName)
             }
+
             //生成其它类
             for (int j = 0; j < config.otherCountPerPackage; j++) {
                 def className = generateName(j).capitalize()
@@ -138,9 +144,18 @@ class AndroidJunkCodeTask extends DefaultTask {
      * @param activityPreName
      */
     void generateActivity(String packageName, String activityPreName) {
+        //生成Activity类名
         def className = activityPreName.capitalize() + "Activity"
+
+        printLog("generateActivity and class name is " + className)
+
+        //生成Activity对应的布局文件的类名
         def layoutName = "${config.resPrefix.toLowerCase()}${packageName.replace(".", "_")}_activity_${activityPreName}"
+
+        printLog("generateActivity and layoutName is " + layoutName)
+        //生成对应的布局文件
         generateLayout(layoutName)
+
         if (!config.excludeActivityJavaFile) {
             def typeBuilder = TypeSpec.classBuilder(className)
             typeBuilder.superclass(ClassName.get("android.app", "Activity"))
@@ -199,8 +214,14 @@ class AndroidJunkCodeTask extends DefaultTask {
      * @param layoutName
      */
     void generateLayout(String layoutName) {
+
+        //生成布局文件
         def layoutFile = new File(outDir, "res/layout/${layoutName}.xml")
-        def layoutStr = String.format(ResTemplate.LAYOUT_TEMPLATE, generateId())
+        //生成布局文件内容
+        def currentGenerateId =  generateId()
+        printLog("generateLayout currentGenerateId " + currentGenerateId)
+        def layoutStr = String.format(ResTemplate.LAYOUT_TEMPLATE, currentGenerateId)
+        //内容写文件
         writeStringToFile(layoutFile, layoutStr)
     }
 
@@ -308,6 +329,21 @@ class AndroidJunkCodeTask extends DefaultTask {
         for (i in 0..5) {
             sb.append(abc[random.nextInt(abc.size())])
         }
+
+        def time = System.currentTimeMillis().toString()
+
+        def endPrefix = time.substring(time.length() -4,time.length() - 1)
+
+        sb.append(endPrefix)
+
         return sb.toString()
+    }
+
+    /**
+     * 打印日志
+     * @param content
+     */
+    static void printLog(String content){
+        print("==============junk=====================" + content)
     }
 }
